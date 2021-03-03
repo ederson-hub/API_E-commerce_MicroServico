@@ -1,4 +1,5 @@
-package com.starksytem.ecommerce.checkout.entity;
+package com.starksystem.ecommerce.payment.Entity;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,19 +9,17 @@ import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Audited
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class CheckoutEntity {
+@NoArgsConstructor
+public class PaymentEntity {
 
     @Id
     @GeneratedValue
@@ -30,31 +29,11 @@ public class CheckoutEntity {
     private String code;
 
     @Column
-    @Enumerated(value = EnumType.STRING)
-    private Status status;
+    private String checkoutCode;
 
-    @Column
-    private Boolean saveAddress;
-
-    @Column
-    private Boolean saveInformation;
-
-    @Column
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @Column
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private ShippingEntity shipping;
-
-    @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL)
-    private List<CheckoutItemEntity> items;
-
-    public enum Status {
-        CREATED,
-        APPROVED
-    }
 }
